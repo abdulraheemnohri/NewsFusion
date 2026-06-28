@@ -20,15 +20,19 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Source
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -47,16 +51,22 @@ import com.example.ui.screens.SavedScreen
 import com.example.ui.screens.SourcesScreen
 import com.example.viewmodel.NewsViewModel
 
-sealed class Screen(val route: String, val title: String, val selectedIcon: ImageVector, val unselectedIcon: ImageVector) {
-    object Splash : Screen("splash", "Splash", Icons.Filled.Home, Icons.Outlined.Home)
-    object Onboarding : Screen("onboarding", "Onboarding", Icons.Filled.Home, Icons.Outlined.Home)
-    object Discover : Screen("discover", "Discover", Icons.Filled.Home, Icons.Outlined.Home)
-    object Saved : Screen("saved", "Saved", Icons.Filled.Bookmark, Icons.Outlined.BookmarkBorder)
-    object Home : Screen("home", "Home", Icons.Filled.Home, Icons.Outlined.Home)
-    object News : Screen("news", "News", Icons.Filled.Newspaper, Icons.Outlined.Newspaper)
-    object Search : Screen("search", "Search", Icons.Filled.Search, Icons.Outlined.Search)
-    object Sources : Screen("sources", "Sources", Icons.Filled.Source, Icons.Outlined.Source)
-    object Settings : Screen("settings", "Settings", Icons.Filled.Settings, Icons.Outlined.Settings)
+sealed class Screen(
+    val route: String, 
+    val title: String, 
+    val selectedIcon: ImageVector, 
+    val unselectedIcon: ImageVector,
+    val iconColor: Color = Color(0xFF00E5FF)
+) {
+    object Splash : Screen("splash", "Splash", Icons.Filled.Home, Icons.Outlined.Home, Color(0xFF00C6FF))
+    object Onboarding : Screen("onboarding", "Onboarding", Icons.Filled.Home, Icons.Outlined.Home, Color(0xFF00C6FF))
+    object Discover : Screen("discover", "Discover", Icons.Filled.Home, Icons.Outlined.Home, Color(0xFF00C6FF))
+    object Saved : Screen("saved", "Saved", Icons.Filled.Bookmark, Icons.Outlined.BookmarkBorder, Color(0xFFE91E63))
+    object Home : Screen("home", "Home", Icons.Filled.Home, Icons.Outlined.Home, Color(0xFF00C6FF))
+    object News : Screen("news", "News", Icons.Filled.Newspaper, Icons.Outlined.Newspaper, Color(0xFFE100FF))
+    object Search : Screen("search", "Search", Icons.Filled.Search, Icons.Outlined.Search, Color(0xFFF5AF19))
+    object Sources : Screen("sources", "Sources", Icons.Filled.Source, Icons.Outlined.Source, Color(0xFFFF416C))
+    object Settings : Screen("settings", "Settings", Icons.Filled.Settings, Icons.Outlined.Settings, Color(0xFF2196F3))
 }
 
 val bottomNavItems = listOf(
@@ -80,15 +90,30 @@ fun MainScreen(viewModel: NewsViewModel) {
             if (bottomNavItems.any { it.route == currentRoute }) {
                 NavigationBar {
                     bottomNavItems.forEach { screen ->
+                        val selected = currentRoute == screen.route
                         NavigationBarItem(
                             icon = {
                                 Icon(
-                                    imageVector = if (currentRoute == screen.route) screen.selectedIcon else screen.unselectedIcon,
-                                    contentDescription = screen.title
+                                    imageVector = if (selected) screen.selectedIcon else screen.unselectedIcon,
+                                    contentDescription = screen.title,
+                                    tint = if (selected) screen.iconColor else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                                 )
                             },
-                            label = { Text(screen.title) },
-                            selected = currentRoute == screen.route,
+                            label = { 
+                                Text(
+                                    text = screen.title,
+                                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (selected) screen.iconColor else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                ) 
+                            },
+                            selected = selected,
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = screen.iconColor,
+                                selectedTextColor = screen.iconColor,
+                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                indicatorColor = screen.iconColor.copy(alpha = 0.15f)
+                            ),
                             onClick = {
                                 navController.navigate(screen.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
@@ -108,10 +133,22 @@ fun MainScreen(viewModel: NewsViewModel) {
             navController = navController,
             startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding),
-            enterTransition = { fadeIn(animationSpec = tween(300)) },
-            exitTransition = { fadeOut(animationSpec = tween(300)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(300)) },
-            popExitTransition = { fadeOut(animationSpec = tween(300)) }
+            enterTransition = { 
+                slideInHorizontally(initialOffsetX = { 300 }, animationSpec = tween(300)) + 
+                fadeIn(animationSpec = tween(300)) 
+            },
+            exitTransition = { 
+                slideOutHorizontally(targetOffsetX = { -300 }, animationSpec = tween(300)) + 
+                fadeOut(animationSpec = tween(300)) 
+            },
+            popEnterTransition = { 
+                slideInHorizontally(initialOffsetX = { -300 }, animationSpec = tween(300)) + 
+                fadeIn(animationSpec = tween(300)) 
+            },
+            popExitTransition = { 
+                slideOutHorizontally(targetOffsetX = { 300 }, animationSpec = tween(300)) + 
+                fadeOut(animationSpec = tween(300)) 
+            }
         ) {
             composable(Screen.Splash.route) {
                 val sources by viewModel.sources.collectAsState()
