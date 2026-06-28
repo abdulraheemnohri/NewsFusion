@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Source
@@ -222,7 +223,8 @@ fun HomeScreen(
                         ArticleCard(
                             article = article, 
                             onSaveClick = { viewModel.toggleSaveArticle(article) },
-                            onClick = { onArticleClick(article.id) }
+                            onClick = { onArticleClick(article.id) },
+                            onDownloadClick = { viewModel.toggleDownloadArticle(article) }
                         )
                     }
                 }
@@ -531,7 +533,7 @@ fun ArticleSkeleton() {
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, onHide: () -> Unit = {}, onAddCategory: () -> Unit = {}) {
+fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, onHide: () -> Unit = {}, onAddCategory: () -> Unit = {}, onDownloadClick: () -> Unit = {}) {
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     val dateString = dateFormat.format(Date(article.pubDate))
 
@@ -665,11 +667,11 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
                                         modifier = Modifier.size(18.dp)
                                     )
                                 }
-                                IconButton(onClick = { /* Download action */ }, modifier = Modifier.size(36.dp)) {
+                                IconButton(onClick = onDownloadClick, modifier = Modifier.size(36.dp)) {
                                     Icon(
-                                        imageVector = Icons.Filled.Download,
+                                        imageVector = if (article.isDownloaded) Icons.Filled.Done else Icons.Filled.Download,
                                         contentDescription = "Download",
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        tint = if (article.isDownloaded) Color(0xFF4CAF50) else MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(18.dp)
                                     )
                                 }

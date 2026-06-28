@@ -60,6 +60,12 @@ fun NewsScreen(viewModel: NewsViewModel, onArticleClick: (Long) -> Unit) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Add category dialogue would appear here")
                         }
+                    },
+                    onDownloadClick = {
+                        viewModel.toggleDownloadArticle(article)
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(if (article.isDownloaded) "Removed from Downloads" else "Saved for Offline Reading")
+                        }
                     }
                 )
             }

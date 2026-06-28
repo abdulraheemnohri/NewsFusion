@@ -99,7 +99,8 @@ fun SavedScreen(viewModel: NewsViewModel, onBack: () -> Unit, onArticleClick: (L
                         ArticleCard(
                             article = article,
                             onSaveClick = { viewModel.toggleSaveArticle(article) },
-                            onClick = { onArticleClick(article.id) }
+                            onClick = { onArticleClick(article.id) },
+                            onDownloadClick = { viewModel.toggleDownloadArticle(article) }
                         )
                     }
                 }

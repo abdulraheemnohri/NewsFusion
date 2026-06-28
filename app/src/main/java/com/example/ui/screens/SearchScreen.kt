@@ -156,7 +156,8 @@ fun SearchScreen(viewModel: NewsViewModel, onArticleClick: (Long) -> Unit) {
                         ArticleCard(
                             article = article,
                             onSaveClick = { viewModel.toggleSaveArticle(article) },
-                            onClick = { onArticleClick(article.id) }
+                            onClick = { onArticleClick(article.id) },
+                            onDownloadClick = { viewModel.toggleDownloadArticle(article) }
                         )
                     }
                 }
