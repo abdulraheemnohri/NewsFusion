@@ -14,3 +14,8 @@ val SurfaceDark = Color(0xFF121212)
 val CardDark = Color(0xFF1E1E1E)
 val TextDark = Color(0xFFE9ECEF)
 val DeepBlueDark = Color(0xFF1E3A8A)
+
+// Added for modern touches
+val PrimaryVariant = Color(0xFF00C6FF)
+val SuccessGreen = Color(0xFF4CAF50)
+val ErrorRed = Color(0xFFF44336)
