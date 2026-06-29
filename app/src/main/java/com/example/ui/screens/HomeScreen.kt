@@ -1,3 +1,5 @@
+url: https://raw.githubusercontent.com/abdulraheemnohri/NewsFusion/main/app/src/main/java/com/example/ui/screens/HomeScreen.kt
+
 package com.example.ui.screens
 
 import androidx.compose.animation.animateContentSize
@@ -43,7 +45,8 @@ private fun getCategoryGradient(category: String): Brush {
     val colors = when (category.lowercase(Locale.ROOT)) {
         "technology", "tech" -> listOf(Color(0xFF00C6FF), Color(0xFF0072FF))
         "science" -> listOf(Color(0xFF7F00FF), Color(0xFFE100FF))
-        "world", "news" -> listOf(Color(0xFF0575E6), Color(0xFF00F260))
+        "world", "news" -> listOf(Color
+(0xFF0575E6), Color(0xFF00F260))
         "sports" -> listOf(Color(0xFFF12711), Color(0xFFF5AF19))
         "gaming" -> listOf(Color(0xFF11998E), Color(0xFF38EF7D))
         "business", "finance" -> listOf(Color(0xFF8A2387), Color(0xFFE94057), Color(0xFFF27121))
@@ -92,7 +95,8 @@ fun HomeScreen(
                             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                         )
                     }
-                },
+           
+     },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 ),
@@ -134,7 +138,8 @@ fun HomeScreen(
                         leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                         shape = MaterialTheme.shapes.extraLarge,
                         enabled = false,
-                        colors = OutlinedTextFieldDefaults.colors(
+                
+        colors = OutlinedTextFieldDefaults.colors(
                             disabledTextColor = MaterialTheme.colorScheme.onSurface,
                             disabledBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                             disabledPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
@@ -173,7 +178,8 @@ fun HomeScreen(
                     }
                 }
 
-                if (articles.isNotEmpty()) {
+                if (articles.isNot
+Empty()) {
                     item {
                         Text(
                             text = "Breaking News", 
@@ -219,7 +225,8 @@ fun HomeScreen(
                         }
                     }
                 } else {
-                    items(articles.drop(5).take(10)) { article ->
+                    items(articles.drop(5).take(10)) 
+{ article ->
                         ArticleCard(
                             article = article, 
                             onSaveClick = { viewModel.toggleSaveArticle(article) },
@@ -267,7 +274,8 @@ fun HomeScreen(
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
                         ),
-                        border = androidx.compose.foundation.BorderStroke(
+         
+               border = androidx.compose.foundation.BorderStroke(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)
                         )
@@ -301,7 +309,8 @@ fun HomeScreen(
                             
                             Spacer(modifier = Modifier.height(16.dp))
                             
-                            Row(
+                    
+        Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
@@ -333,7 +342,8 @@ fun HomeScreen(
                                     )
                                     Text(
                                         text = "Screen focus time",
-                                        style = MaterialTheme.typography.bodySmall,
+                               
+         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -379,7 +389,8 @@ fun BreakingNewsCard(article: Article, onSaveClick: () -> Unit, onClick: () -> U
                         .background(
                             Brush.verticalGradient(
                                 colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.85f)),
-                                startY = 80f
+             
+                   startY = 80f
                             )
                         )
                 )
@@ -430,7 +441,8 @@ fun BreakingNewsCard(article: Article, onSaveClick: () -> Unit, onClick: () -> U
                         text = article.title,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        color = Color.Whi
+te,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -484,7 +496,8 @@ fun StatCard(
             modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
+,
             verticalArrangement = Arrangement.Center
         ) {
             Icon(
@@ -525,7 +538,8 @@ fun ArticleSkeleton() {
             Box(modifier = Modifier.fillMaxWidth(0.6f).height(16.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Box(modifier = Modifier.width(100.dp).height(16.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)))
-                Box(modifier = Modifier.size(24.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)))
+                Box(modifier = Modifier.size(24.dp).background(MaterialTheme.co
+lorScheme.onSurfaceVariant.copy(alpha = 0.2f)))
             }
         }
     }
@@ -576,7 +590,8 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color, shape = CardDefaults.shape)
+      
+              .background(color, shape = CardDefaults.shape)
                     .padding(horizontal = 24.dp),
                 contentAlignment = alignment
             ) {
@@ -619,7 +634,8 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
-                        
+              
+          
                         Text(
                             text = article.title,
                             style = MaterialTheme.typography.titleMedium,
@@ -658,7 +674,8 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Ali
+gnment.CenterVertically) {
                                 IconButton(onClick = onSaveClick, modifier = Modifier.size(36.dp)) {
                                     Icon(
                                         imageVector = if (article.isSaved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
@@ -691,7 +708,8 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
                                 contentDescription = article.title,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
-                            )
+             
+               )
                         } else {
                             Box(
                                 modifier = Modifier
@@ -704,15 +722,9 @@ fun ArticleCard(article: Article, onSaveClick: () -> Unit, onClick: () -> Unit, 
                                     style = MaterialTheme.typography.titleLarge,
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    )
-}
+                 
+
+... [Content truncated]
 
 @Composable
 fun FavoriteSourceItem(name: String) {
@@ -720,48 +732,35 @@ fun FavoriteSourceItem(name: String) {
     val r = ((hashColor and 0xFF0000) shr 16).toInt()
     val g = ((hashColor and 0x00FF00) shr 8).toInt()
     val b = (hashColor and 0x0000FF).toInt()
-    val sourceColor = Color(red = r, green = g, blue = b, alpha = 255)
+    val badgeColor = Color(red = r, green = g, blue = b, alpha = 255)
     
-    val bgGradient = Brush.radialGradient(
-        colors = listOf(sourceColor.copy(alpha = 0.85f), sourceColor)
-    )
-
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .width(76.dp)
-            .clickable { /* Select or filter by source */ }
+            .width(80.dp)
+            .clickable { },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .size(64.dp)
-                .background(bgGradient, shape = androidx.compose.foundation.shape.CircleShape)
-                .padding(2.dp)
-                .background(MaterialTheme.colorScheme.background, shape = androidx.compose.foundation.shape.CircleShape),
-            contentAlignment = Alignment.Center
+        Surface(
+            modifier = Modifier.size(48.dp),
+            shape = CircleShape,
+            color = badgeColor.copy(alpha = 0.12f)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(52.dp)
-                    .background(bgGradient, shape = androidx.compose.foundation.shape.CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
+            Box(contentAlignment = Alignment.Center) {
                 Text(
                     text = name.firstOrNull()?.toString()?.uppercase(Locale.ROOT) ?: "?",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
+                    color = badgeColor,
                     fontWeight = FontWeight.Bold
                 )
             }
         }
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = name,
             style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.SemiBold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            color = MaterialTheme.colorScheme.onBackground
+            textAlign = TextAlign.Center
         )
     }
 }
